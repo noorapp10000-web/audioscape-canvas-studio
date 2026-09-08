@@ -41,7 +41,7 @@ export function Num({
           {suffix}
         </span>
       </div>
-      <Slider min={min} max={max} step={step} value={[value]} onValueChange={([v]) => onChange(v)} />
+      <Slider min={min} max={max} step={step} value={[value]} onValueChange={([v]) => onChange(v ?? value)} />
     </div>
   );
 }
