@@ -4,26 +4,26 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/editor", label: "Create Video", icon: Wand2 },
-  { to: "/templates", label: "Templates", icon: LayoutTemplate },
-  { to: "/projects", label: "My Projects", icon: Folder },
-  { to: "/assets", label: "My Assets", icon: Images },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/", label: "الرئيسية", icon: LayoutDashboard },
+  { to: "/editor", label: "إنشاء فيديو", icon: Wand2 },
+  { to: "/templates", label: "القوالب", icon: LayoutTemplate },
+  { to: "/projects", label: "مشاريعي", icon: Folder },
+  { to: "/assets", label: "ملفاتي", icon: Images },
+  { to: "/settings", label: "الإعدادات", icon: Settings },
 ] as const;
 
 export function Shell({ children }: { children: ReactNode }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   return (
     <div className="min-h-screen bg-background">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-border bg-sidebar px-3 py-5 lg:flex">
+      <aside className="fixed inset-y-0 start-0 z-30 hidden w-60 flex-col border-e border-border bg-sidebar px-3 py-5 lg:flex">
         <Link to="/" className="mb-7 flex items-center gap-2 px-2">
           <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground">
             <Sparkles className="size-5" />
           </span>
           <span className="text-[15px] font-semibold leading-tight">
-            Quran Player
-            <span className="block text-xs font-normal text-muted-foreground">Studio</span>
+            مشغل القرآن
+            <span className="block text-xs font-normal text-muted-foreground">استوديو</span>
           </span>
         </Link>
         <nav className="flex flex-1 flex-col gap-1">
@@ -42,17 +42,17 @@ export function Shell({ children }: { children: ReactNode }) {
             </Link>
           ))}
         </nav>
-        <p className="px-3 text-[11px] text-muted-foreground">Projects are saved on this device.</p>
+        <p className="px-3 text-[11px] text-muted-foreground">المشاريع محفوظة على جهازك.</p>
       </aside>
 
       <header className="sticky top-0 z-30 flex items-center gap-2 border-b border-border bg-background/85 px-4 py-3 backdrop-blur lg:hidden">
         <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground">
           <Sparkles className="size-4" />
         </span>
-        <span className="text-sm font-semibold">Quran Player Studio</span>
+        <span className="text-sm font-semibold">استوديو مشغل القرآن</span>
       </header>
 
-      <main className="pb-24 lg:pb-10 lg:pl-60">{children}</main>
+      <main className="pb-24 lg:pb-10 lg:ps-60">{children}</main>
 
       <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-around border-t border-border bg-background/95 px-1 pb-[env(safe-area-inset-bottom)] pt-1.5 backdrop-blur lg:hidden">
         {NAV.map((n) => (

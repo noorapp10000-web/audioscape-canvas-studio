@@ -12,10 +12,10 @@ import { ASPECTS, type Aspect } from "@/lib/types";
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings · Quran Player Studio" },
-      { name: "description", content: "Choose default canvas size, video quality and frame rate, and manage stored data." },
-      { property: "og:title", content: "Settings · Quran Player Studio" },
-      { property: "og:description", content: "Defaults for new projects and export settings." },
+      { title: "الإعدادات · استوديو مشغل القرآن" },
+      { name: "description", content: "اختر مقاس الكانفس الافتراضي وجودة الفيديو ومعدل الإطارات وأدر البيانات المحفوظة." },
+      { property: "og:title", content: "الإعدادات · استوديو مشغل القرآن" },
+      { property: "og:description", content: "الإعدادات الافتراضية للمشاريع الجديدة والتصدير." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -52,28 +52,28 @@ function SettingsPage() {
   return (
     <Shell>
       <div className="max-w-2xl px-4 py-6 sm:px-6 lg:px-8">
-        <PageHeader title="Settings" subtitle="Defaults for new projects and stored data." />
+        <PageHeader title="الإعدادات" subtitle="الإعدادات الافتراضية للمشاريع الجديدة والبيانات المحفوظة." />
 
         <div className="glass space-y-1 rounded-2xl p-4">
-          <Section title="New project defaults">
+          <Section title="مشروع جديد defaults">
             <Choice
-              label="Canvas size"
+              label="مقاس الكانفس"
               value={defs.aspect}
               onChange={(v) => update({ aspect: v })}
               options={(Object.keys(ASPECTS) as Aspect[]).map((a) => ({ value: a, label: ASPECTS[a].label }))}
             />
             <Choice
-              label="Default template"
+              label="القالب الافتراضي"
               value={defs.templateId}
               onChange={(v) => update({ templateId: v })}
               options={TEMPLATES.map((t) => ({ value: t.id, label: t.name }))}
             />
-            <Toggle label="Snap layers to grid" checked={defs.snap} onChange={(v) => update({ snap: v })} />
+            <Toggle label="محاذاة العناصر للشبكة" checked={defs.snap} onChange={(v) => update({ snap: v })} />
           </Section>
 
-          <Section title="Export">
+          <Section title="التصدير">
             <Choice
-              label="Quality"
+              label="الجودة"
               value={defs.quality}
               onChange={(v) => update({ quality: v })}
               options={[
@@ -82,26 +82,26 @@ function SettingsPage() {
               ]}
             />
             <Choice
-              label="Frame rate"
+              label="معدل الإطارات"
               value={defs.fps}
               onChange={(v) => update({ fps: v })}
               options={[
-                { value: "30", label: "30 fps" },
+                { value: "30", label: "30 إطار/ث" },
                 { value: "60", label: "60 fps" },
               ]}
             />
             <p className="pt-1 text-xs text-muted-foreground">
               {mime
-                ? `This browser exports video as .${mime.ext} (${mime.mime.split(";")[0]}).`
-                : "Checking supported video format…"}
+                ? `هذا المتصفح يصدّر الفيديو بصيغة .${mime.ext} (${mime.mime.split(";")[0]}).`
+                : "جاري التحقق من صيغة الفيديو المدعومة…"}
             </p>
           </Section>
         </div>
 
         <div className="glass mt-4 rounded-2xl p-4">
-          <h2 className="text-sm font-semibold">Stored data</h2>
+          <h2 className="text-sm font-semibold">البيانات المحفوظة</h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            {counts.projects} projects and {counts.assets} assets are stored on this device.
+            {counts.projects} مشروع و{counts.assets} ملف محفوظين على هذا الجهاز.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <Button
@@ -109,20 +109,20 @@ function SettingsPage() {
               onClick={async () => {
                 await store.saveAssets([]);
                 setCounts((c) => ({ ...c, assets: 0 }));
-                toast.success("Assets cleared");
+                toast.success("تم مسح الملفات");
               }}
             >
-              Clear assets
+              مسح الملفات
             </Button>
             <Button
               variant="destructive"
               onClick={async () => {
                 await store.saveProjects([]);
                 setCounts((c) => ({ ...c, projects: 0 }));
-                toast.success("Projects cleared");
+                toast.success("تم حذف المشاريع");
               }}
             >
-              Delete all projects
+              حذف كل المشاريع
             </Button>
           </div>
         </div>
