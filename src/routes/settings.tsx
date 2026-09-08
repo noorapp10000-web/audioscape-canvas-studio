@@ -28,7 +28,7 @@ function SettingsPage() {
     aspect: "9:16" as Aspect,
     quality: "1080" as "720" | "1080",
     fps: "30" as "30" | "60",
-    templateId: TEMPLATES[0].id,
+    templateId: TEMPLATES[0]!.id,
     snap: true,
   });
   const [counts, setCounts] = useState({ projects: 0, assets: 0 });

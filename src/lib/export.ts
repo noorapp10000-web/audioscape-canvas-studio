@@ -111,7 +111,7 @@ export async function exportVideo(
   stream.getTracks().forEach((t) => t.stop());
   void actx.close();
   onProgress(1);
-  return { blob: new Blob(chunks, { type: mime.split(";")[0] }), ext };
+  return { blob: new Blob(chunks, { type: mime.split(";")[0] ?? "video/webm" }), ext };
 }
 
 export function downloadBlob(blob: Blob, filename: string) {

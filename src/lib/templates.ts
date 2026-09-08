@@ -122,7 +122,7 @@ function make(id: string, name: string, category: string, patch: Deep): Template
     if (v !== null && typeof v === "object" && !Array.isArray(v) && typeof c[k] === "object") {
       Object.assign(c[k] as object, v as object);
     } else {
-      (c as Record<string, unknown>)[k as string] = v;
+      (c as unknown as Record<string, unknown>)[k as string] = v;
     }
   }
   return { id, name, category, config: c };
@@ -295,5 +295,5 @@ export const TEMPLATES: Template[] = [
 export const TEMPLATE_CATEGORIES = Array.from(new Set(TEMPLATES.map((t) => t.category)));
 
 export function getTemplate(id: string): Template {
-  return TEMPLATES.find((t) => t.id === id) ?? TEMPLATES[0];
+  return TEMPLATES.find((t) => t.id === id) ?? (TEMPLATES[0] as Template);
 }

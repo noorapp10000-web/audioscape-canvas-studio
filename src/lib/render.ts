@@ -576,7 +576,7 @@ function drawControls(ctx: CanvasRenderingContext2D, cfg: PlayerConfig, s: Frame
   const total = widths.reduce((a, b) => a + b, 0) + gap * (items.length - 1);
   let x = c.x * W - total / 2;
   items.forEach((k, i) => {
-    const wI = widths[i];
+    const wI = widths[i] ?? 0;
     const main = k === "play" || k === "pause";
     ctx.globalAlpha = main ? 1 : 0.75;
     icon(ctx, k, x + wI / 2, y, main ? size * 1.3 : size * 0.7, main ? cfg.colors.accent : cfg.colors.text, main && c.filled);

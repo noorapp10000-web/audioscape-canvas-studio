@@ -59,7 +59,7 @@ function Dashboard() {
           subtitle="Upload audio → choose a player design → customise → export video."
           action={
             <Button asChild size="lg">
-              <Link to="/editor">
+              <Link to="/editor" search={{ project: undefined, template: undefined }}>
                 <Plus className="size-4" /> New video
               </Link>
             </Button>

@@ -43,8 +43,8 @@ import {
 
 export const Route = createFileRoute("/editor")({
   validateSearch: (s: Record<string, unknown>) => ({
-    project: typeof s.project === "string" ? s.project : undefined,
-    template: typeof s.template === "string" ? s.template : undefined,
+    project: typeof s["project"] === "string" ? (s["project"] as string) : undefined,
+    template: typeof s["template"] === "string" ? (s["template"] as string) : undefined,
   }),
   head: () => ({
     meta: [
@@ -773,7 +773,7 @@ function EditorPage() {
                   >
                     Duplicate project
                   </Button>
-                  <Button variant="outline" className="w-full" onClick={() => reset({ ...newProject(project.templateId, project.name), audio: project.audio, coverUrl: project.coverUrl, logoUrl: project.logoUrl })}>
+                  <Button variant="outline" className="w-full" onClick={() => reset({ ...newProject(project.templateId, project.name), ...(project.audio ? { audio: project.audio } : {}), ...(project.coverUrl ? { coverUrl: project.coverUrl } : {}), ...(project.logoUrl ? { logoUrl: project.logoUrl } : {}) })}>
                     Reset all customisation
                   </Button>
                 </Section>
