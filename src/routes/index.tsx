@@ -12,16 +12,16 @@ import type { Asset, Project } from "@/lib/types";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Quran Player Studio · Music-player style Quran videos" },
+      { title: "استوديو مشغل القرآن · فيديوهات قرآنية بشكل مشغل" },
       {
         name: "description",
         content:
-          "Turn recitations into premium music-player style videos: upload audio, pick a template, customise everything and export MP4.",
+          "حوّل التلاوات لفيديوهات احترافية بشكل مشغل موسيقى: ارفع الصوت، اختر قالب، عدّل كل شيء، وصدّر MP4.",
       },
-      { property: "og:title", content: "Quran Player Studio" },
+      { property: "og:title", content: "استوديو مشغل القرآن" },
       {
         property: "og:description",
-        content: "Design animated Quran audio players and export them as video.",
+        content: "صمّم مشغلات قرآنية متحركة وصدّرها فيديو.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -46,21 +46,21 @@ function Dashboard() {
   }, []);
 
   const stats = [
-    { label: "Projects", value: projects.length, icon: Film },
-    { label: "Templates", value: TEMPLATES.length, icon: LayoutTemplate },
-    { label: "Assets", value: assets.length, icon: Images },
+    { label: "المشاريع", value: projects.length, icon: Film },
+    { label: "القوالب", value: TEMPLATES.length, icon: LayoutTemplate },
+    { label: "الملفات", value: assets.length, icon: Images },
   ];
 
   return (
     <Shell>
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <PageHeader
-          title="Quran Player Studio"
-          subtitle="Upload audio → choose a player design → customise → export video."
+          title="استوديو مشغل القرآن"
+          subtitle="ارفع الصوت ← اختر شكل المشغل ← عدّل ← صدّر فيديو."
           action={
             <Button asChild size="lg">
               <Link to="/editor" search={{ project: undefined, template: undefined }}>
-                <Plus className="size-4" /> New video
+                <Plus className="size-4" /> فيديو جديد
               </Link>
             </Button>
           }
@@ -78,9 +78,9 @@ function Dashboard() {
 
         <section className="mt-9">
           <div className="mb-3 flex items-end justify-between">
-            <h2 className="text-lg font-semibold">Start from a template</h2>
+            <h2 className="text-lg font-semibold">ابدأ من قالب</h2>
             <Link to="/templates" className="text-sm text-primary hover:underline">
-              See all {TEMPLATES.length}
+              شاهد الكل ({TEMPLATES.length})
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
@@ -103,13 +103,13 @@ function Dashboard() {
 
         <section className="mt-9">
           <div className="mb-3 flex items-end justify-between">
-            <h2 className="text-lg font-semibold">Recent projects</h2>
+            <h2 className="text-lg font-semibold">أحدث المشاريع</h2>
             <Link to="/projects" className="text-sm text-primary hover:underline">
-              All projects
+              كل المشاريع
             </Link>
           </div>
           {projects.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No projects yet.</p>
+            <p className="text-sm text-muted-foreground">لا توجد مشاريع بعد.</p>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {projects.slice(0, 6).map((p) => (

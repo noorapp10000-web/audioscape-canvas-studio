@@ -14,10 +14,10 @@ const KINDS = ["all", "audio", "cover", "logo", "background"] as const;
 export const Route = createFileRoute("/assets")({
   head: () => ({
     meta: [
-      { title: "My assets · Quran Player Studio" },
-      { name: "description", content: "Store recitation audio, cover art, logos and backgrounds to reuse in any project." },
-      { property: "og:title", content: "My assets · Quran Player Studio" },
-      { property: "og:description", content: "Your reusable audio and image library." },
+      { title: "ملفاتي · استوديو مشغل القرآن" },
+      { name: "description", content: "خزّن التلاوات والأغلفة والشعارات والخلفيات لاستخدامها في أي مشروع." },
+      { property: "og:title", content: "ملفاتي · استوديو مشغل القرآن" },
+      { property: "og:description", content: "مكتبة الصوت والصور الخاصة بك." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -42,7 +42,7 @@ function AssetsPage() {
       await store.addAsset({ id: uid(), kind: uploadKind, name: f.name, url, createdAt: Date.now() });
     }
     setAssets(await store.assets());
-    toast.success("Added to your assets");
+    toast.success("تمت الإضافة إلى ملفاتك");
   };
 
   const remove = async (id: string) => {
@@ -56,8 +56,8 @@ function AssetsPage() {
     <Shell>
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <PageHeader
-          title="My assets"
-          subtitle="Audio, covers, logos and backgrounds saved on this device."
+          title="ملفاتي"
+          subtitle="صوتيات وأغلفة وشعارات وخلفيات محفوظة على جهازك."
           action={
             <div className="flex items-center gap-2">
               <select
@@ -65,13 +65,13 @@ function AssetsPage() {
                 onChange={(e) => setUploadKind(e.target.value as Asset["kind"])}
                 className="h-9 rounded-lg border border-border bg-card px-2 text-sm"
               >
-                <option value="cover">Cover</option>
-                <option value="logo">Logo</option>
-                <option value="background">Background</option>
-                <option value="audio">Audio</option>
+                <option value="cover">غلاف</option>
+                <option value="logo">شعار</option>
+                <option value="background">خلفية</option>
+                <option value="audio">صوت</option>
               </select>
               <Button onClick={() => input.current?.click()}>
-                <UploadIcon className="size-4" /> Upload
+                <UploadIcon className="size-4" /> رفع
               </Button>
               <input
                 ref={input}
@@ -101,7 +101,7 @@ function AssetsPage() {
         </div>
 
         {list.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Nothing here yet — upload your first file.</p>
+          <p className="text-sm text-muted-foreground">لا يوجد شيء هنا — ارفع أول ملف.</p>
         ) : (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {list.map((a) => (
@@ -120,7 +120,7 @@ function AssetsPage() {
                     <p className="text-[10px] capitalize text-muted-foreground">{a.kind}</p>
                   </div>
                   <button
-                    aria-label="Delete asset"
+                    aria-label="حذف الملف"
                     onClick={() => remove(a.id)}
                     className="grid size-7 place-items-center rounded-md hover:bg-sidebar-accent"
                   >

@@ -1,3 +1,4 @@
+import { autoFit } from "./layout";
 import type { Colors, PlayerConfig, TextLayer } from "./types";
 
 const text = (o: Partial<TextLayer>): TextLayer => ({
@@ -125,11 +126,11 @@ function make(id: string, name: string, category: string, patch: Deep): Template
       (c as unknown as Record<string, unknown>)[k as string] = v;
     }
   }
-  return { id, name, category, config: c };
+  return { id, name, category, config: autoFit(c, c.aspect) };
 }
 
 export const TEMPLATES: Template[] = [
-  make("aurora", "Aurora Stream", "Spotify-inspired", {
+  make("aurora", "أورورا", "مستوحى من سبوتيفاي", {
     colors: { accent: "#1ed992", progress: "#ffffff", wave: "#1ed992", glow: "#1ed992", bg: "#07100c", bg2: "#123024" },
     cover: { shape: "rounded", radius: 24, size: 0.78, y: 0.33, glow: 0.1, shadow: 0.7, anim: "none" },
     title: { align: "left", x: 0.11, y: 0.63, size: 62 },
@@ -139,7 +140,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.86, size: 0.085, heart: true },
     waveform: { style: "roundedBars", bars: 48, y: 0.95, h: 0.04 },
   }),
-  make("cupertino", "Cupertino Now Playing", "Classic music player", {
+  make("cupertino", "كوبرتينو", "مشغل كلاسيكي", {
     background: { type: "coverBlur", blur: 90, brightness: 0.5, vignette: 0.35, anim: "none" },
     colors: { accent: "#ffffff", progress: "#ffffff", progressBg: "#ffffff33", wave: "#ffffff" },
     card: { show: true, opacity: 0.1, radius: 60, y: 0.55, h: 0.7 },
@@ -151,7 +152,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.84, size: 0.09, gap: 0.11, volume: true },
     waveform: { show: false },
   }),
-  make("material", "Material Beat", "Modern Quran player", {
+  make("material", "ماتيريال", "مشغل قرآن حديث", {
     background: { type: "gradient", anim: "moving", vignette: 0.2, blur: 0 },
     colors: { bg: "#101418", bg2: "#1d2a35", accent: "#8ab4f8", progress: "#8ab4f8", wave: "#8ab4f8", glow: "#8ab4f8" },
     card: { show: true, opacity: 0.16, radius: 48, y: 0.56, h: 0.68, border: true },
@@ -163,7 +164,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.86, size: 0.08, heart: true, volume: true },
     waveform: { style: "equalizer", bars: 40, y: 0.94 },
   }),
-  make("minimal", "Pure Minimal", "Minimal", {
+  make("minimal", "مينيمال", "بسيط", {
     background: { type: "solid", blur: 0, brightness: 1, vignette: 0, overlay: 0, anim: "none" },
     colors: { bg: "#0d0d0f", bg2: "#0d0d0f", accent: "#ffffff", progress: "#ffffff", wave: "#ffffff", glow: "#ffffff" },
     cover: { shape: "square", radius: 0, size: 0.62, y: 0.33, shadow: 0.3, glow: 0, anim: "none" },
@@ -174,7 +175,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.83, size: 0.06, gap: 0.08, filled: false },
     waveform: { style: "minimal", bars: 100, barW: 2, gap: 2, y: 0.92, h: 0.03 },
   }),
-  make("royal", "Royal Gold", "Luxury", {
+  make("royal", "ذهبي ملكي", "فخم", {
     background: { type: "gradient", vignette: 0.6, pattern: true, anim: "zoom", blur: 0 },
     colors: { bg: "#0a0803", bg2: "#3a2c0c", accent: "#e6c777", progress: "#e6c777", wave: "#e6c777", glow: "#e6c777", border: "#e6c77744" },
     cover: { shape: "circle", size: 0.6, y: 0.3, border: 6, glow: 0.5, anim: "rotate" },
@@ -185,7 +186,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.86, size: 0.075 },
     waveform: { style: "mirror", bars: 72, y: 0.94, h: 0.06 },
   }),
-  make("mihrab", "Mihrab", "Islamic", {
+  make("mihrab", "محراب", "إسلامي", {
     background: { type: "gradient", pattern: true, vignette: 0.55, anim: "none", blur: 0 },
     colors: { bg: "#04140f", bg2: "#0c3a2b", accent: "#d9c07a", progress: "#d9c07a", wave: "#d9c07a", glow: "#d9c07a" },
     cover: { shape: "circle", size: 0.5, y: 0.24, border: 4, glow: 0.35, anim: "zoom" },
@@ -197,7 +198,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.88, size: 0.07 },
     waveform: { style: "line", y: 0.95, h: 0.04, bars: 120, barW: 2, gap: 2 },
   }),
-  make("onyx", "Onyx", "Dark", {
+  make("onyx", "أونكس", "داكن", {
     background: { type: "coverBlur", blur: 120, brightness: 0.3, vignette: 0.7, anim: "kenburns" },
     colors: { bg: "#000000", bg2: "#0a0a0a", accent: "#f2f2f2", progress: "#f2f2f2", wave: "#8f8f8f", glow: "#ffffff" },
     cover: { shape: "rounded", radius: 18, size: 0.74, y: 0.32, shadow: 0.9, anim: "none" },
@@ -208,7 +209,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.85, size: 0.075, filled: false },
     waveform: { style: "bars", bars: 80, barW: 4, gap: 4, y: 0.93 },
   }),
-  make("frost", "Frost Glass", "Glassmorphism", {
+  make("frost", "زجاج مثلج", "زجاجي", {
     background: { type: "coverBlur", blur: 70, brightness: 0.6, saturation: 1.4, vignette: 0.3, anim: "zoom" },
     card: { show: true, opacity: 0.18, radius: 56, blur: true, border: true, y: 0.56, h: 0.72 },
     colors: { accent: "#ffffff", progress: "#ffffff", wave: "#ffffff", glow: "#ffffff", border: "#ffffff55" },
@@ -220,7 +221,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.86, size: 0.08, heart: true },
     waveform: { style: "roundedBars", bars: 52, y: 0.94 },
   }),
-  make("neon", "Neon Pulse", "Neon", {
+  make("neon", "نيون", "نيون", {
     background: { type: "animatedGradient", vignette: 0.5, particles: true, anim: "moving", blur: 0 },
     colors: { bg: "#07020f", bg2: "#2a0a4a", accent: "#ff4ecd", progress: "#ff4ecd", wave: "#4ee0ff", glow: "#ff4ecd" },
     cover: { shape: "circle", size: 0.52, y: 0.3, glow: 0.8, border: 3, anim: "glow" },
@@ -231,7 +232,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.86, size: 0.08 },
     waveform: { style: "circular", y: 0.3, h: 0.09, bars: 96 },
   }),
-  make("cinema", "Cinema Wide", "Cinematic", {
+  make("cinema", "سينما عريض", "سينمائي", {
     aspect: "16:9",
     background: { type: "coverBlur", blur: 100, brightness: 0.4, vignette: 0.8, anim: "kenburns" },
     colors: { accent: "#e8d5a8", progress: "#e8d5a8", wave: "#e8d5a8", glow: "#e8d5a8" },
@@ -244,7 +245,7 @@ export const TEMPLATES: Template[] = [
     controls: { x: 0.71, y: 0.82, size: 0.05, gap: 0.06 },
     waveform: { x: 0.71, y: 0.74, w: 0.46, h: 0.06, bars: 60, style: "mirror" },
   }),
-  make("elegant", "Elegance", "Elegant", {
+  make("elegant", "أناقة", "أنيق", {
     background: { type: "gradient", vignette: 0.4, anim: "none", blur: 0 },
     colors: { bg: "#12100e", bg2: "#2b241c", accent: "#cbb08a", progress: "#cbb08a", wave: "#cbb08a", glow: "#cbb08a" },
     cover: { shape: "rounded", radius: 8, size: 0.58, y: 0.3, border: 2, shadow: 0.5, anim: "none" },
@@ -255,7 +256,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.86, size: 0.065, filled: false },
     waveform: { style: "dots", bars: 60, y: 0.93, h: 0.035 },
   }),
-  make("podcast", "Podcast Room", "Podcast-style", {
+  make("podcast", "بودكاست", "بودكاست", {
     background: { type: "gradient", vignette: 0.3, anim: "none", blur: 0 },
     colors: { bg: "#141216", bg2: "#2b2130", accent: "#ff8a5b", progress: "#ff8a5b", wave: "#ff8a5b", glow: "#ff8a5b" },
     card: { show: true, opacity: 0.12, radius: 40, y: 0.58, h: 0.66 },
@@ -267,7 +268,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.86, size: 0.075, volume: true },
     waveform: { style: "spectrum", bars: 56, y: 0.94, h: 0.05 },
   }),
-  make("retro", "Retro Deck", "Classic music player", {
+  make("retro", "ريترو", "مشغل كلاسيكي", {
     background: { type: "gradient", vignette: 0.5, anim: "none", blur: 0 },
     colors: { bg: "#1a1512", bg2: "#3b2f26", accent: "#f0a44a", progress: "#f0a44a", wave: "#f0a44a", glow: "#f0a44a" },
     cover: { shape: "square", radius: 0, size: 0.66, y: 0.32, border: 8, shadow: 0.6, anim: "none" },
@@ -278,7 +279,7 @@ export const TEMPLATES: Template[] = [
     controls: { y: 0.87, size: 0.08 },
     waveform: { style: "equalizer", bars: 24, barW: 14, gap: 8, y: 0.94, h: 0.05 },
   }),
-  make("quran-modern", "Quran Modern", "Modern Quran player", {
+  make("quran-modern", "قرآن مودرن", "مشغل قرآن حديث", {
     background: { type: "coverBlur", blur: 80, brightness: 0.45, vignette: 0.6, anim: "zoom" },
     colors: { bg: "#06100f", bg2: "#0f2b2a", accent: "#7fe3d0", progress: "#7fe3d0", wave: "#7fe3d0", glow: "#7fe3d0" },
     cover: { shape: "circle", size: 0.56, y: 0.27, glow: 0.4, anim: "zoom" },
@@ -291,6 +292,17 @@ export const TEMPLATES: Template[] = [
     waveform: { style: "roundedBars", bars: 44, y: 0.94 },
   }),
 ];
+
+/* Every design also exists as a ready-made 16:9 (YouTube) layout,
+   auto-fitted by the layout engine. */
+const WIDE: Template[] = TEMPLATES.filter((t) => t.config.aspect !== "16:9").map((t) => ({
+  id: `${t.id}-wide`,
+  name: `${t.name} · عريض 16:9`,
+  category: t.category,
+  config: autoFit(t.config, "16:9"),
+}));
+
+TEMPLATES.push(...WIDE);
 
 export const TEMPLATE_CATEGORIES = Array.from(new Set(TEMPLATES.map((t) => t.category)));
 

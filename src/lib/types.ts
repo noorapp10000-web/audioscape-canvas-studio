@@ -95,7 +95,8 @@ export interface PlayerConfig {
     glow: number;
     border: number;
     zoom: number;
-    anim: "none" | "zoom" | "pulse" | "rotate" | "float" | "glow";
+    anim: "none" | "zoom" | "pulse" | "rotate" | "float" | "glow" | "swing" | "bounce" | "kenburns";
+    animSpeed?: number;
   };
   logo: {
     show: boolean;

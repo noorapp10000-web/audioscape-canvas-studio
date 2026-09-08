@@ -11,13 +11,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/templates")({
   head: () => ({
     meta: [
-      { title: "Player templates · Quran Player Studio" },
+      { title: "قوالب المشغل · استوديو مشغل القرآن" },
       {
         name: "description",
-        content: "Browse iPhone, Android, Spotify-inspired and Quran player designs and open any of them in the editor.",
+        content: "تصفح قوالب مشغلات القرآن بمقاسات 9:16 و16:9 وافتح أي واحد في المحرر.",
       },
-      { property: "og:title", content: "Player templates · Quran Player Studio" },
-      { property: "og:description", content: "14 original animated audio-player designs, fully customisable." },
+      { property: "og:title", content: "قوالب المشغل · استوديو مشغل القرآن" },
+      { property: "og:description", content: "قوالب مشغل صوتي متحركة وقابلة للتعديل بالكامل." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -26,7 +26,8 @@ export const Route = createFileRoute("/templates")({
 });
 
 function TemplatesPage() {
-  const [cat, setCat] = useState<string>("All");
+  const [cat, setCat] = useState<string>("الكل");
+  const [asp, setAsp] = useState<string>("الكل");
   const [favs, setFavs] = useState<string[]>([]);
 
   useEffect(() => {
@@ -39,15 +40,15 @@ function TemplatesPage() {
     await store.saveFavTemplates(next);
   };
 
-  const list = cat === "All" ? TEMPLATES : TEMPLATES.filter((t) => t.category === cat);
+  const list = TEMPLATES.filter((t) => (cat === "الكل" || t.category === cat) && (asp === "الكل" || t.config.aspect === asp));
 
   return (
     <Shell>
       <div className="px-4 py-6 sm:px-6 lg:px-8">
-        <PageHeader title="Templates" subtitle={`${TEMPLATES.length} original player designs — tap one to start.`} />
+        <PageHeader title="القوالب" subtitle={`${TEMPLATES.length} تصميم مشغل جاهز — اختر واحد وابدأ.`} />
 
         <div className="mb-5 flex flex-wrap gap-2">
-          {["All", ...TEMPLATE_CATEGORIES].map((c) => (
+          {["الكل", ...TEMPLATE_CATEGORIES].map((c) => (
             <button
               key={c}
               onClick={() => setCat(c)}
@@ -57,6 +58,21 @@ function TemplatesPage() {
               )}
             >
               {c}
+            </button>
+          ))}
+        </div>
+
+        <div className="mb-5 flex flex-wrap gap-2">
+          {["الكل", "9:16", "16:9", "1:1", "4:5"].map((a) => (
+            <button
+              key={a}
+              onClick={() => setAsp(a)}
+              className={cn(
+                "rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground transition hover:text-foreground",
+                asp === a && "border-primary/60 bg-primary/15 text-foreground",
+              )}
+            >
+              {a}
             </button>
           ))}
         </div>
@@ -75,7 +91,7 @@ function TemplatesPage() {
                   </p>
                 </div>
                 <button
-                  aria-label="Favourite template"
+                  aria-label="تفضيل القالب"
                   onClick={() => toggleFav(t.id)}
                   className="grid size-8 place-items-center rounded-lg hover:bg-sidebar-accent"
                 >
@@ -86,7 +102,7 @@ function TemplatesPage() {
               </div>
               <Button asChild size="sm" className="mt-2 mb-1 w-full">
                 <Link to="/editor" search={{ template: t.id, project: undefined }}>
-                  Use template
+                  استخدم القالب
                 </Link>
               </Button>
             </div>

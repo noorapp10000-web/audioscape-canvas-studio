@@ -242,21 +242,33 @@ function drawCover(ctx: CanvasRenderingContext2D, cfg: PlayerConfig, s: FrameSta
   let rot = (c.rotate * Math.PI) / 180;
   let glow = c.glow;
   const prog = s.duration ? s.time / s.duration : 0;
+  const sp = c.animSpeed ?? 1;
+  const at = s.time * sp;
   switch (c.anim) {
     case "zoom":
-      scale = 1 + prog * 0.08;
+      scale = 1 + prog * 0.08 * sp;
       break;
     case "pulse":
-      scale = 1 + Math.sin(s.time * 1.6) * 0.015;
+      scale = 1 + Math.sin(at * 1.6) * 0.015 * sp;
       break;
     case "rotate":
-      rot += s.time * 0.12;
+      rot += at * 0.12;
       break;
     case "float":
-      y += Math.sin(s.time * 1.1) * h * 0.02;
+      y += Math.sin(at * 1.1) * h * 0.02;
+      break;
+    case "swing":
+      rot += Math.sin(at * 0.9) * 0.06 * sp;
+      break;
+    case "bounce":
+      y -= Math.abs(Math.sin(at * 1.5)) * h * 0.035 * sp;
+      break;
+    case "kenburns":
+      scale = 1.02 + Math.sin(at * 0.25) * 0.03 * sp;
+      x += Math.sin(at * 0.2) * w * 0.02;
       break;
     case "glow":
-      glow = c.glow * (0.6 + Math.abs(Math.sin(s.time * 1.4)) * 0.8);
+      glow = c.glow * (0.6 + Math.abs(Math.sin(at * 1.4)) * 0.8);
       break;
   }
   const cx = x + w / 2;
