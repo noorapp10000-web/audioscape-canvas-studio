@@ -94,6 +94,12 @@ function wrapText(ctx: CanvasRenderingContext2D, str: string, maxW: number, maxL
   return lines;
 }
 
+// When the preview is paused at the very start, show entrance animations finished
+// so nothing looks "missing" in the editor.
+function introTime(s: FrameState): number {
+  return s.playing || s.time > 0.05 ? s.time : 1;
+}
+
 function animAlpha(anim: string, t: number, delay = 0): { alpha: number; dy: number } {
   const p = Math.max(0, Math.min(1, (t - delay) / 0.8));
   const e = 1 - Math.pow(1 - p, 3);
@@ -301,7 +307,7 @@ function drawLogo(ctx: CanvasRenderingContext2D, cfg: PlayerConfig, s: FrameStat
   let y = l.y * H - size / 2;
   const x = l.x * W - size / 2;
   let alpha = l.opacity;
-  if (l.anim === "fade") alpha *= animAlpha("fade", s.time).alpha;
+  if (l.anim === "fade") alpha *= animAlpha("fade", introTime(s)).alpha;
   if (l.anim === "pulse") alpha *= 0.75 + Math.abs(Math.sin(s.time * 1.3)) * 0.25;
   if (l.anim === "float") y += Math.sin(s.time * 1.2) * size * 0.06;
   ctx.save();
@@ -358,7 +364,7 @@ function drawTextLayer(
   ctx.textBaseline = "middle";
   ctx.direction = layer.rtl ? "rtl" : "ltr";
   ctx.letterSpacing = `${layer.letter * scale}px`;
-  const { alpha, dy } = animAlpha(layer.anim === "typewriter" ? "fade" : layer.anim, s.time);
+  const { alpha, dy } = animAlpha(layer.anim === "typewriter" ? "fade" : layer.anim, introTime(s));
   ctx.globalAlpha = layer.opacity * alpha;
   ctx.fillStyle = layer.color || fallbackColor;
   if (layer.glow > 0) {
