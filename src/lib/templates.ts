@@ -118,7 +118,12 @@ type Deep = {
 function make(id: string, name: string, category: string, patch: Deep): Template {
   const c = baseConfig();
   for (const k of Object.keys(patch) as (keyof PlayerConfig)[]) {
-    Object.assign(c[k] as object, patch[k] as object);
+    const v = patch[k];
+    if (v !== null && typeof v === "object" && !Array.isArray(v) && typeof c[k] === "object") {
+      Object.assign(c[k] as object, v as object);
+    } else {
+      (c as Record<string, unknown>)[k as string] = v;
+    }
   }
   return { id, name, category, config: c };
 }
