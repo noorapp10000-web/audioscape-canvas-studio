@@ -32,9 +32,10 @@ function SettingsPage() {
     snap: true,
   });
   const [counts, setCounts] = useState({ projects: 0, assets: 0 });
-  const mime = pickMime();
+  const [mime, setMime] = useState<{ mime: string; ext: string } | null>(null);
 
   useEffect(() => {
+    setMime(pickMime());
     (async () => {
       const s = await store.settings();
       if (s) setDefs((d) => ({ ...d, ...(s as Partial<typeof d>) }));
@@ -90,7 +91,9 @@ function SettingsPage() {
               ]}
             />
             <p className="pt-1 text-xs text-muted-foreground">
-              This browser exports video as <span className="text-foreground">.{mime.ext}</span> ({mime.mime.split(";")[0]}).
+              {mime
+                ? `This browser exports video as .${mime.ext} (${mime.mime.split(";")[0]}).`
+                : "Checking supported video format…"}
             </p>
           </Section>
         </div>
