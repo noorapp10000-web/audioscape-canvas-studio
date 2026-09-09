@@ -26,7 +26,7 @@ import { PlayerStage, useImage, type LayerKey } from "@/components/PlayerStage";
 import { Choice, ColorField, Num, Section, Text as TextField, Toggle, Upload } from "@/components/controls";
 import { analyzeAudio, fileToDataUrl, fmtTime } from "@/lib/audio";
 import { store, uid } from "@/lib/db";
-import { downloadBlob, exportVideo, pickMime } from "@/lib/export";
+import { downloadBlob, estimateSizeMB, exportVideo, pickMime } from "@/lib/export";
 import { newProject } from "@/lib/project";
 import { TEMPLATES, getTemplate } from "@/lib/templates";
 import { autoFit } from "@/lib/layout";
