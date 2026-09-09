@@ -12,6 +12,7 @@ export function newProject(templateId = "cupertino", name = "Untitled player"): 
     verses: [],
     fps: 30,
     quality: 1080,
+    sizeMode: "balanced",
     updatedAt: Date.now(),
   };
 }
