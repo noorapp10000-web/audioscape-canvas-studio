@@ -820,9 +820,23 @@ function EditorPage() {
                     ]}
                     onChange={(v) => set((p) => ({ ...p, fps: Number(v) as 30 | 60 }))}
                   />
+                  <Choice
+                    label="حجم الملف"
+                    value={project.sizeMode ?? "balanced"}
+                    options={[
+                      { value: "light", label: "خفيف (أصغر ملف)" },
+                      { value: "balanced", label: "متوازن (مستحسن)" },
+                      { value: "high", label: "جودة عالية (ملف كبير)" },
+                    ]}
+                    onChange={(v) => set((p) => ({ ...p, sizeMode: v as "light" | "balanced" | "high" }))}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    الحجم المتوقع: ≈ {estimateSizeMB(project, duration || 0).toFixed(1)} ميجابايت لمدة {fmtTime(duration)}.
+                  </p>
                   <p className="text-xs text-muted-foreground">
                     الناتج: {pickMime().ext.toUpperCase()} · صوت AAC/Opus · المدة {fmtTime(duration)} بالضبط. التصدير يتم على جهازك بسرعة التشغيل الطبيعية، فدقيقة صوت تأخذ حوالي دقيقة. اترك الصفحة مفتوحة أثناء التصدير.
                   </p>
+
                   <Button className="w-full" onClick={doExport} disabled={exporting}>
                     {exporting ? <Loader2 className="size-4 animate-spin" /> : <Download className="size-4" />} ابدأ التصدير والتحميل
                   </Button>
