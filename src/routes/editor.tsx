@@ -833,7 +833,7 @@ function EditorPage() {
                     onChange={(v) => set((p) => ({ ...p, sizeMode: v as "light" | "balanced" | "high" }))}
                   />
                   <p className="text-xs text-muted-foreground">
-                    الحجم المتوقع (تقريبي): {estimateSizeMB(project, duration || 0).toFixed(0)} – {(estimateSizeMB(project, duration || 0) * 1.6).toFixed(0)} ميجابايت لمدة {fmtTime(duration)}.
+                    الحجم المتوقع (تقريبي): {estimateSizeMB(project, duration || 0).toFixed(0)} – {(estimateSizeMB(project, duration || 0) * 2).toFixed(0)} ميجابايت لمدة {fmtTime(duration)}.
                   </p>
                   {lastExport && (
                     <p className="text-xs font-semibold text-foreground">
