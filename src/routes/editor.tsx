@@ -141,6 +141,7 @@ function EditorPage() {
   const [selected, setSelected] = useState<LayerKey | null>(null);
   const [exporting, setExporting] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [lastExport, setLastExport] = useState<{ mb: number; ext: string } | null>(null);
   const cancelRef = useRef(false);
   const [analyzing, setAnalyzing] = useState(false);
 
@@ -310,7 +311,8 @@ function EditorPage() {
         return;
       }
       downloadBlob(blob, `${project.name.replace(/[^\w\u0600-\u06FF -]/g, "") || "player"}.${ext}`);
-      toast.success(`Video ready · ${(blob.size / 1e6).toFixed(1)} MB`);
+      setLastExport({ mb: blob.size / (1024 * 1024), ext });
+      toast.success(`تم التصدير · الحجم الفعلي ${(blob.size / (1024 * 1024)).toFixed(1)} ميجابايت`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "فشل التصدير");
     } finally {
@@ -831,8 +833,13 @@ function EditorPage() {
                     onChange={(v) => set((p) => ({ ...p, sizeMode: v as "light" | "balanced" | "high" }))}
                   />
                   <p className="text-xs text-muted-foreground">
-                    الحجم المتوقع: ≈ {estimateSizeMB(project, duration || 0).toFixed(1)} ميجابايت لمدة {fmtTime(duration)}.
+                    الحجم المتوقع (تقريبي): {estimateSizeMB(project, duration || 0).toFixed(0)} – {(estimateSizeMB(project, duration || 0) * 1.6).toFixed(0)} ميجابايت لمدة {fmtTime(duration)}.
                   </p>
+                  {lastExport && (
+                    <p className="text-xs font-semibold text-foreground">
+                      حجم آخر ملف ناتج فعليًا: {lastExport.mb.toFixed(1)} ميجابايت ({lastExport.ext.toUpperCase()}).
+                    </p>
+                  )}
                   <p className="text-xs text-muted-foreground">
                     الناتج: {pickMime().ext.toUpperCase()} · صوت AAC/Opus · المدة {fmtTime(duration)} بالضبط. التصدير يتم على جهازك بسرعة التشغيل الطبيعية، فدقيقة صوت تأخذ حوالي دقيقة. اترك الصفحة مفتوحة أثناء التصدير.
                   </p>
