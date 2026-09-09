@@ -15,6 +15,24 @@ export function pickMime(): { mime: string; ext: string } {
   return { mime: "video/webm", ext: "webm" };
 }
 
+/** معدلات البت حسب وضع الحجم — المحتوى شبه ثابت (غلاف + موجة) فمعدل منخفض يكفي. */
+export function bitratesFor(project: Pick<Project, "quality" | "fps" | "sizeMode">) {
+  const mode = project.sizeMode ?? "balanced";
+  const base = mode === "light" ? 900_000 : mode === "high" ? 5_000_000 : 2_200_000;
+  const res = project.quality === 1080 ? 1 : 0.55;
+  const fps = project.fps === 60 ? 1.35 : 1;
+  return {
+    video: Math.round(base * res * fps),
+    audio: mode === "light" ? 96_000 : mode === "high" ? 192_000 : 128_000,
+  };
+}
+
+/** تقدير حجم الملف بالميجابايت لمدة معينة بالثواني. */
+export function estimateSizeMB(project: Pick<Project, "quality" | "fps" | "sizeMode">, seconds: number) {
+  const { video, audio } = bitratesFor(project);
+  return ((video + audio) * seconds) / 8 / 1024 / 1024;
+}
+
 export interface ExportImages {
   cover: HTMLImageElement | null;
   logo: HTMLImageElement | null;
@@ -59,8 +77,8 @@ export async function exportVideo(
   const { mime, ext } = pickMime();
   const stream = canvas.captureStream(project.fps);
   dest.stream.getAudioTracks().forEach((t) => stream.addTrack(t));
-  const bitrate = project.quality === 1080 ? 8_000_000 : 4_500_000;
-  const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: bitrate, audioBitsPerSecond: 192_000 });
+  const { video: bitrate, audio: abr } = bitratesFor(project);
+  const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: bitrate, audioBitsPerSecond: abr });
   const chunks: Blob[] = [];
   rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
 

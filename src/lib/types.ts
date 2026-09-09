@@ -172,6 +172,8 @@ export interface Project {
   bgUrl?: string;
   fps: 30 | 60;
   quality: 720 | 1080;
+  /** حجم الملف/الجودة: light ≈ أصغر ملف، balanced افتراضي، high جودة عالية */
+  sizeMode?: "light" | "balanced" | "high";
   updatedAt: number;
   favorite?: boolean;
 }
